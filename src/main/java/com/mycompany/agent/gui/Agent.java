@@ -18,7 +18,8 @@ public class Agent {
     public void Session() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_agent_jar_1.0-SNAPSHOTPU");
         em = emf.createEntityManager();
-        мая шалава мы с ней бумбумбум
+        //моя шалава мы с ней бумбумбум
+       
     }
 
 }
