@@ -43,6 +43,13 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password")})
 public class Users implements Serializable {
 
+    @OneToMany(mappedBy = "agentUser")
+    private Collection<Agent> agentCollection;
+    @OneToMany(mappedBy = "clientId")
+    private Collection<Ticket> ticketCollection;
+    @OneToMany(mappedBy = "clientId")
+    private Collection<Consultations> consultationsCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -251,6 +258,30 @@ public class Users implements Serializable {
     @Override
     public String toString() {
         return "com.mycompany.agent.entity.Users[ idusers=" + idusers + " ]";
+    }
+
+    public Collection<Agent> getAgentCollection() {
+        return agentCollection;
+    }
+
+    public void setAgentCollection(Collection<Agent> agentCollection) {
+        this.agentCollection = agentCollection;
+    }
+
+    public Collection<Ticket> getTicketCollection() {
+        return ticketCollection;
+    }
+
+    public void setTicketCollection(Collection<Ticket> ticketCollection) {
+        this.ticketCollection = ticketCollection;
+    }
+
+    public Collection<Consultations> getConsultationsCollection() {
+        return consultationsCollection;
+    }
+
+    public void setConsultationsCollection(Collection<Consultations> consultationsCollection) {
+        this.consultationsCollection = consultationsCollection;
     }
     
 }

@@ -5,6 +5,7 @@
 package com.mycompany.agent.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -32,6 +34,11 @@ import javax.persistence.Table;
     @NamedQuery(name = "Hotel.findByKolvoStar", query = "SELECT h FROM Hotel h WHERE h.kolvoStar = :kolvoStar"),
     @NamedQuery(name = "Hotel.findByPrice", query = "SELECT h FROM Hotel h WHERE h.price = :price")})
 public class Hotel implements Serializable {
+
+    @OneToMany(mappedBy = "hotelId")
+    private Collection<RoomSales> roomSalesCollection;
+    @OneToMany(mappedBy = "hotelId")
+    private Collection<HotelBookings> hotelBookingsCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -148,6 +155,22 @@ public class Hotel implements Serializable {
     @Override
     public String toString() {
         return "com.mycompany.agent.entity.Hotel[ idHotel=" + idHotel + " ]";
+    }
+
+    public Collection<RoomSales> getRoomSalesCollection() {
+        return roomSalesCollection;
+    }
+
+    public void setRoomSalesCollection(Collection<RoomSales> roomSalesCollection) {
+        this.roomSalesCollection = roomSalesCollection;
+    }
+
+    public Collection<HotelBookings> getHotelBookingsCollection() {
+        return hotelBookingsCollection;
+    }
+
+    public void setHotelBookingsCollection(Collection<HotelBookings> hotelBookingsCollection) {
+        this.hotelBookingsCollection = hotelBookingsCollection;
     }
     
 }
