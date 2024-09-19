@@ -23,14 +23,13 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author 207380
+ * @author 207371
  */
 @Entity
 @Table(name = "users")
 @NamedQueries({
     @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
     @NamedQuery(name = "Users.findByIdusers", query = "SELECT u FROM Users u WHERE u.idusers = :idusers"),
-    @NamedQuery(name = "Users.findByPodtverzdenie", query = "SELECT u FROM Users u WHERE u.podtverzdenie = :podtverzdenie"),
     @NamedQuery(name = "Users.findByImya", query = "SELECT u FROM Users u WHERE u.imya = :imya"),
     @NamedQuery(name = "Users.findByFamiliya", query = "SELECT u FROM Users u WHERE u.familiya = :familiya"),
     @NamedQuery(name = "Users.findByOtchestvo", query = "SELECT u FROM Users u WHERE u.otchestvo = :otchestvo"),
@@ -39,6 +38,7 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Users.findByPassport", query = "SELECT u FROM Users u WHERE u.passport = :passport"),
     @NamedQuery(name = "Users.findBySnils", query = "SELECT u FROM Users u WHERE u.snils = :snils"),
     @NamedQuery(name = "Users.findByCode", query = "SELECT u FROM Users u WHERE u.code = :code"),
+    @NamedQuery(name = "Users.findByPodtverzdenie", query = "SELECT u FROM Users u WHERE u.podtverzdenie = :podtverzdenie"),
     @NamedQuery(name = "Users.findByLogin", query = "SELECT u FROM Users u WHERE u.login = :login"),
     @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password")})
 public class Users implements Serializable {
@@ -49,8 +49,6 @@ public class Users implements Serializable {
     @Basic(optional = false)
     @Column(name = "idusers")
     private Integer idusers;
-    @Column(name = "Podtverzdenie")
-    private String podtverzdenie;
     @Column(name = "Imya")
     private String imya;
     @Column(name = "Familiya")
@@ -72,16 +70,24 @@ public class Users implements Serializable {
     private String photolink;
     @Column(name = "code")
     private String code;
+    @Column(name = "Podtverzdenie")
+    private String podtverzdenie;
     @Column(name = "login")
     private String login;
     @Column(name = "password")
     private String password;
+    @OneToMany(mappedBy = "agentUser")
+    private Collection<Agent> agentCollection;
     @OneToMany(mappedBy = "managerUser")
     private Collection<Manager> managerCollection;
+    @OneToMany(mappedBy = "clientId")
+    private Collection<Ticket> ticketCollection;
     @OneToMany(mappedBy = "directorUser")
     private Collection<Director> directorCollection;
     @OneToMany(mappedBy = "adminUser")
     private Collection<Admin> adminCollection;
+    @OneToMany(mappedBy = "clientId")
+    private Collection<Consultations> consultationsCollection;
     @OneToMany(mappedBy = "clientUser")
     private Collection<Client> clientCollection;
 
@@ -98,14 +104,6 @@ public class Users implements Serializable {
 
     public void setIdusers(Integer idusers) {
         this.idusers = idusers;
-    }
-
-    public String getPodtverzdenie() {
-        return podtverzdenie;
-    }
-
-    public void setPodtverzdenie(String podtverzdenie) {
-        this.podtverzdenie = podtverzdenie;
     }
 
     public String getImya() {
@@ -180,6 +178,14 @@ public class Users implements Serializable {
         this.code = code;
     }
 
+    public String getPodtverzdenie() {
+        return podtverzdenie;
+    }
+
+    public void setPodtverzdenie(String podtverzdenie) {
+        this.podtverzdenie = podtverzdenie;
+    }
+
     public String getLogin() {
         return login;
     }
@@ -196,12 +202,28 @@ public class Users implements Serializable {
         this.password = password;
     }
 
+    public Collection<Agent> getAgentCollection() {
+        return agentCollection;
+    }
+
+    public void setAgentCollection(Collection<Agent> agentCollection) {
+        this.agentCollection = agentCollection;
+    }
+
     public Collection<Manager> getManagerCollection() {
         return managerCollection;
     }
 
     public void setManagerCollection(Collection<Manager> managerCollection) {
         this.managerCollection = managerCollection;
+    }
+
+    public Collection<Ticket> getTicketCollection() {
+        return ticketCollection;
+    }
+
+    public void setTicketCollection(Collection<Ticket> ticketCollection) {
+        this.ticketCollection = ticketCollection;
     }
 
     public Collection<Director> getDirectorCollection() {
@@ -218,6 +240,14 @@ public class Users implements Serializable {
 
     public void setAdminCollection(Collection<Admin> adminCollection) {
         this.adminCollection = adminCollection;
+    }
+
+    public Collection<Consultations> getConsultationsCollection() {
+        return consultationsCollection;
+    }
+
+    public void setConsultationsCollection(Collection<Consultations> consultationsCollection) {
+        this.consultationsCollection = consultationsCollection;
     }
 
     public Collection<Client> getClientCollection() {

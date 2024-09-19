@@ -2,13 +2,23 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="com.mycompany_agent_jar_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>com.mycompany.agent.entity.Users</class>
-    <class>com.mycompany.agent.entity.Hotel</class>
-    <class>com.mycompany.agent.entity.Client</class>
-    <class>com.mycompany.agent.entity.Admin</class>
-    <class>com.mycompany.agent.entity.Manager</class>
-    <class>com.mycompany.agent.entity.Director</class>
     <class>com.mycompany.agent.entity.Agent</class>
+    <class>com.mycompany.agent.entity.Director</class>
+    <class>com.mycompany.agent.entity.HotelBookings</class>
+    <class>com.mycompany.agent.entity.Hotel</class>
+    <class>com.mycompany.agent.entity.Excursionsales</class>
+    <class>com.mycompany.agent.entity.Admin</class>
+    <class>com.mycompany.agent.entity.PackageWishes</class>
+    <class>com.mycompany.agent.entity.Manager</class>
+    <class>com.mycompany.agent.entity.Client</class>
+    <class>com.mycompany.agent.entity.Ticket</class>
+    <class>com.mycompany.agent.entity.Excursions</class>
+    <class>com.mycompany.agent.entity.RoomSales</class>
+    <class>com.mycompany.agent.entity.Consultations</class>
+    <class>com.mycompany.agent.entity.DesiredPackages</class>
+    <class>com.mycompany.agent.entity.Packages</class>
+    <class>com.mycompany.agent.entity.PackageSales</class>
+    <class>com.mycompany.agent.entity.Users</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://1208-1:3306/db04?serverTimezone=Asia/Novokuznetsk&amp;useSSL=false"/>
       <property name="javax.persistence.jdbc.user" value="login4"/>

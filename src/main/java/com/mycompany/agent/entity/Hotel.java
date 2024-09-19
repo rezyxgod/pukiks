@@ -5,6 +5,8 @@
 package com.mycompany.agent.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,11 +15,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
  *
- * @author 207380
+ * @author 207371
  */
 @Entity
 @Table(name = "hotel")
@@ -51,8 +54,13 @@ public class Hotel implements Serializable {
     private String address;
     @Column(name = "kolvoStar")
     private Integer kolvoStar;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "price")
-    private String price;
+    private BigDecimal price;
+    @OneToMany(mappedBy = "hotelId")
+    private Collection<RoomSales> roomSalesCollection;
+    @OneToMany(mappedBy = "hotelId")
+    private Collection<HotelBookings> hotelBookingsCollection;
 
     public Hotel() {
     }
@@ -117,12 +125,28 @@ public class Hotel implements Serializable {
         this.kolvoStar = kolvoStar;
     }
 
-    public String getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Collection<RoomSales> getRoomSalesCollection() {
+        return roomSalesCollection;
+    }
+
+    public void setRoomSalesCollection(Collection<RoomSales> roomSalesCollection) {
+        this.roomSalesCollection = roomSalesCollection;
+    }
+
+    public Collection<HotelBookings> getHotelBookingsCollection() {
+        return hotelBookingsCollection;
+    }
+
+    public void setHotelBookingsCollection(Collection<HotelBookings> hotelBookingsCollection) {
+        this.hotelBookingsCollection = hotelBookingsCollection;
     }
 
     @Override

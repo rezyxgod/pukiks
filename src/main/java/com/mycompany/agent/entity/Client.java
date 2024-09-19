@@ -5,6 +5,7 @@
 package com.mycompany.agent.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,11 +16,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
  *
- * @author 207380
+ * @author 207371
  */
 @Entity
 @Table(name = "client")
@@ -34,6 +36,18 @@ public class Client implements Serializable {
     @Basic(optional = false)
     @Column(name = "idClient")
     private Integer idClient;
+    @OneToMany(mappedBy = "clientId")
+    private Collection<RoomSales> roomSalesCollection;
+    @OneToMany(mappedBy = "clientId")
+    private Collection<DesiredPackages> desiredPackagesCollection;
+    @OneToMany(mappedBy = "clientId")
+    private Collection<PackageWishes> packageWishesCollection;
+    @OneToMany(mappedBy = "clientId")
+    private Collection<HotelBookings> hotelBookingsCollection;
+    @OneToMany(mappedBy = "clientId")
+    private Collection<PackageSales> packageSalesCollection;
+    @OneToMany(mappedBy = "clientId")
+    private Collection<Excursionsales> excursionsalesCollection;
     @JoinColumn(name = "client_user", referencedColumnName = "idusers")
     @ManyToOne
     private Users clientUser;
@@ -51,6 +65,54 @@ public class Client implements Serializable {
 
     public void setIdClient(Integer idClient) {
         this.idClient = idClient;
+    }
+
+    public Collection<RoomSales> getRoomSalesCollection() {
+        return roomSalesCollection;
+    }
+
+    public void setRoomSalesCollection(Collection<RoomSales> roomSalesCollection) {
+        this.roomSalesCollection = roomSalesCollection;
+    }
+
+    public Collection<DesiredPackages> getDesiredPackagesCollection() {
+        return desiredPackagesCollection;
+    }
+
+    public void setDesiredPackagesCollection(Collection<DesiredPackages> desiredPackagesCollection) {
+        this.desiredPackagesCollection = desiredPackagesCollection;
+    }
+
+    public Collection<PackageWishes> getPackageWishesCollection() {
+        return packageWishesCollection;
+    }
+
+    public void setPackageWishesCollection(Collection<PackageWishes> packageWishesCollection) {
+        this.packageWishesCollection = packageWishesCollection;
+    }
+
+    public Collection<HotelBookings> getHotelBookingsCollection() {
+        return hotelBookingsCollection;
+    }
+
+    public void setHotelBookingsCollection(Collection<HotelBookings> hotelBookingsCollection) {
+        this.hotelBookingsCollection = hotelBookingsCollection;
+    }
+
+    public Collection<PackageSales> getPackageSalesCollection() {
+        return packageSalesCollection;
+    }
+
+    public void setPackageSalesCollection(Collection<PackageSales> packageSalesCollection) {
+        this.packageSalesCollection = packageSalesCollection;
+    }
+
+    public Collection<Excursionsales> getExcursionsalesCollection() {
+        return excursionsalesCollection;
+    }
+
+    public void setExcursionsalesCollection(Collection<Excursionsales> excursionsalesCollection) {
+        this.excursionsalesCollection = excursionsalesCollection;
     }
 
     public Users getClientUser() {

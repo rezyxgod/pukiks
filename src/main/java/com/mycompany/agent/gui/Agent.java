@@ -12,12 +12,14 @@ public class Agent {
     public EntityManager em;
 
     public static void main(String[] args) {
-        //new First().setVisible(true);
+        new authorization().setVisible(true);
     }
 
     public void Session() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_agent_jar_1.0-SNAPSHOTPU");
         em = emf.createEntityManager();
+        
+       
     }
 
 }

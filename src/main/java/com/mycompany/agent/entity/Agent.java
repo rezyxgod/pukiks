@@ -11,20 +11,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
  *
- * @author 207380
+ * @author 207371
  */
 @Entity
 @Table(name = "agent")
 @NamedQueries({
     @NamedQuery(name = "Agent.findAll", query = "SELECT a FROM Agent a"),
-    @NamedQuery(name = "Agent.findByIdAgent", query = "SELECT a FROM Agent a WHERE a.idAgent = :idAgent"),
-    @NamedQuery(name = "Agent.findByAgentUser", query = "SELECT a FROM Agent a WHERE a.agentUser = :agentUser")})
+    @NamedQuery(name = "Agent.findByIdAgent", query = "SELECT a FROM Agent a WHERE a.idAgent = :idAgent")})
 public class Agent implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,8 +34,9 @@ public class Agent implements Serializable {
     @Basic(optional = false)
     @Column(name = "idAgent")
     private Integer idAgent;
-    @Column(name = "agent_User")
-    private Integer agentUser;
+    @JoinColumn(name = "agent_User", referencedColumnName = "idusers")
+    @ManyToOne
+    private Users agentUser;
 
     public Agent() {
     }
@@ -51,11 +53,11 @@ public class Agent implements Serializable {
         this.idAgent = idAgent;
     }
 
-    public Integer getAgentUser() {
+    public Users getAgentUser() {
         return agentUser;
     }
 
-    public void setAgentUser(Integer agentUser) {
+    public void setAgentUser(Users agentUser) {
         this.agentUser = agentUser;
     }
 
