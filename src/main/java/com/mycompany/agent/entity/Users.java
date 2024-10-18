@@ -7,9 +7,11 @@ package com.mycompany.agent.entity;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,10 +22,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
- * @author 207371
+ * @author 207363
  */
 @Entity
 @Table(name = "users")
@@ -35,13 +41,17 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Users.findByOtchestvo", query = "SELECT u FROM Users u WHERE u.otchestvo = :otchestvo"),
     @NamedQuery(name = "Users.findByDataRoj", query = "SELECT u FROM Users u WHERE u.dataRoj = :dataRoj"),
     @NamedQuery(name = "Users.findByDataTruda", query = "SELECT u FROM Users u WHERE u.dataTruda = :dataTruda"),
-    @NamedQuery(name = "Users.findByPassport", query = "SELECT u FROM Users u WHERE u.passport = :passport"),
+    @NamedQuery(name = "Users.findByPassportSeries", query = "SELECT u FROM Users u WHERE u.passportSeries = :passportSeries"),
+    @NamedQuery(name = "Users.findByPassportNumber", query = "SELECT u FROM Users u WHERE u.passportNumber = :passportNumber"),
     @NamedQuery(name = "Users.findBySnils", query = "SELECT u FROM Users u WHERE u.snils = :snils"),
     @NamedQuery(name = "Users.findByCode", query = "SELECT u FROM Users u WHERE u.code = :code"),
     @NamedQuery(name = "Users.findByPodtverzdenie", query = "SELECT u FROM Users u WHERE u.podtverzdenie = :podtverzdenie"),
     @NamedQuery(name = "Users.findByLogin", query = "SELECT u FROM Users u WHERE u.login = :login"),
     @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password")})
 public class Users implements Serializable {
+
+    @OneToMany(mappedBy = "clientUser")
+    private Collection<Client> clientCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,8 +71,10 @@ public class Users implements Serializable {
     @Column(name = "dataTruda")
     @Temporal(TemporalType.DATE)
     private Date dataTruda;
-    @Column(name = "passport")
-    private String passport;
+    @Column(name = "passportSeries")
+    private String passportSeries;
+    @Column(name = "passportNumber")
+    private String passportNumber;
     @Column(name = "snils")
     private String snils;
     @Lob
@@ -76,24 +88,22 @@ public class Users implements Serializable {
     private String login;
     @Column(name = "password")
     private String password;
-    @OneToMany(mappedBy = "agentUser")
-    private Collection<Agent> agentCollection;
-    @OneToMany(mappedBy = "managerUser")
-    private Collection<Manager> managerCollection;
-    @OneToMany(mappedBy = "clientId")
-    private Collection<Ticket> ticketCollection;
-    @OneToMany(mappedBy = "directorUser")
-    private Collection<Director> directorCollection;
-    @OneToMany(mappedBy = "adminUser")
-    private Collection<Admin> adminCollection;
-    @OneToMany(mappedBy = "clientId")
-    private Collection<Consultations> consultationsCollection;
-    @OneToMany(mappedBy = "clientUser")
-    private Collection<Client> clientCollection;
 
     public Users() {
     }
 
+    public List<Users> getUserLoginPassword(String login, String password,
+            EntityManager em) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Users> cq = cb.createQuery(Users.class);
+        Root<Users> root = cq.from(Users.class);
+        cq.select(root).where(cb.and(cb.equal(root.get(Users_.login), login),
+                cb.equal(root.get(Users_.password), password)));
+        TypedQuery query = em.createQuery(cq);
+        List<Users> userLoginPassword = query.getResultList();
+        return userLoginPassword;
+    }
+    
     public Users(Integer idusers) {
         this.idusers = idusers;
     }
@@ -146,12 +156,20 @@ public class Users implements Serializable {
         this.dataTruda = dataTruda;
     }
 
-    public String getPassport() {
-        return passport;
+    public String getPassportSeries() {
+        return passportSeries;
     }
 
-    public void setPassport(String passport) {
-        this.passport = passport;
+    public void setPassportSeries(String passportSeries) {
+        this.passportSeries = passportSeries;
+    }
+
+    public String getPassportNumber() {
+        return passportNumber;
+    }
+
+    public void setPassportNumber(String passportNumber) {
+        this.passportNumber = passportNumber;
     }
 
     public String getSnils() {
@@ -202,62 +220,6 @@ public class Users implements Serializable {
         this.password = password;
     }
 
-    public Collection<Agent> getAgentCollection() {
-        return agentCollection;
-    }
-
-    public void setAgentCollection(Collection<Agent> agentCollection) {
-        this.agentCollection = agentCollection;
-    }
-
-    public Collection<Manager> getManagerCollection() {
-        return managerCollection;
-    }
-
-    public void setManagerCollection(Collection<Manager> managerCollection) {
-        this.managerCollection = managerCollection;
-    }
-
-    public Collection<Ticket> getTicketCollection() {
-        return ticketCollection;
-    }
-
-    public void setTicketCollection(Collection<Ticket> ticketCollection) {
-        this.ticketCollection = ticketCollection;
-    }
-
-    public Collection<Director> getDirectorCollection() {
-        return directorCollection;
-    }
-
-    public void setDirectorCollection(Collection<Director> directorCollection) {
-        this.directorCollection = directorCollection;
-    }
-
-    public Collection<Admin> getAdminCollection() {
-        return adminCollection;
-    }
-
-    public void setAdminCollection(Collection<Admin> adminCollection) {
-        this.adminCollection = adminCollection;
-    }
-
-    public Collection<Consultations> getConsultationsCollection() {
-        return consultationsCollection;
-    }
-
-    public void setConsultationsCollection(Collection<Consultations> consultationsCollection) {
-        this.consultationsCollection = consultationsCollection;
-    }
-
-    public Collection<Client> getClientCollection() {
-        return clientCollection;
-    }
-
-    public void setClientCollection(Collection<Client> clientCollection) {
-        this.clientCollection = clientCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -281,6 +243,14 @@ public class Users implements Serializable {
     @Override
     public String toString() {
         return "com.mycompany.agent.entity.Users[ idusers=" + idusers + " ]";
+    }
+
+    public Collection<Client> getClientCollection() {
+        return clientCollection;
+    }
+
+    public void setClientCollection(Collection<Client> clientCollection) {
+        this.clientCollection = clientCollection;
     }
     
 }

@@ -4,6 +4,16 @@
  */
 package com.mycompany.agent.gui;
 
+import com.mycompany.agent.entity.Admin;
+import java.util.List;
+import com.mycompany.agent.entity.Users;
+import com.mycompany.agent.entity.Agent;
+import com.mycompany.agent.entity.Client;
+import com.mycompany.agent.entity.Director;
+import com.mycompany.agent.entity.Manager;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
+
 /**
  *
  * @author 207363
@@ -15,6 +25,18 @@ public class authorization extends javax.swing.JFrame {
      */
     public authorization() {
         initComponents();
+    }
+
+    private int currentUserId;
+
+    // Предположим, что есть метод, который определяет текущего пользователя и устанавливает его ID
+    public void setCurrentUserId(int userId) {
+        this.currentUserId = userId;
+    }
+
+    // Метод для получения ID текущего пользователя
+    public int getCurrentUserId() {
+        return currentUserId;
     }
 
     /**
@@ -131,6 +153,71 @@ public class authorization extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        authorization auth = new authorization();
+        Main m = new Main();
+        m.Session();
+        String login = jTextField1.getText();
+        String password = jTextField2.getText();
+        Users u = new Users();
+        int id = 0;
+        for (Users user : new Users().getUserLoginPassword(login, password, m.em)) {
+            id = user.getIdusers();
+
+            if (id != 0) {
+                Admin m1 = new Admin();
+                List listAdministrator;
+                listAdministrator = m1.getUserAdministrator(id, m.em);
+                if (listAdministrator.size() != 0) {
+                    new com.mycompany.agent.gui.Users().setVisible(true);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Неверный логин или пароль", "Ошибка", ERROR_MESSAGE);
+            }
+            if (id != 0) {
+                Agent m1 = new Agent();
+                List listAgent;
+                listAgent = m1.getUserAgent(id, m.em);
+                if (listAgent.size() != 0) {
+                    //new com.mycompany.agent.gui.Users().setVisible(true);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Неверный логин или пароль", "Ошибка", ERROR_MESSAGE);
+            }
+            if (id != 0) {
+                Client m1 = new Client();
+                List listClient;
+                listClient = m1.getUserClient(id, m.em);
+                System.out.println(listClient);
+                if (listClient.size() != 0) {
+                    //new com.mycompany.agent.gui.Users().setVisible(true);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Неверный логин или пароль", "Ошибка", ERROR_MESSAGE);
+            }
+            if (id != 0) {
+                Director m1 = new Director();
+                List listDirector;
+                listDirector = m1.getUserDirector(id, m.em);
+                System.out.println(listDirector);
+                if (listDirector.size() != 0) {
+                    //new com.mycompany.agent.gui.Users().setVisible(true);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Неверный логин или пароль", "Ошибка", ERROR_MESSAGE);
+            }
+            if (id != 0) {
+                Manager m1 = new Manager();
+                List listManager;
+                listManager = m1.getUserManager(id, m.em);
+                System.out.println(listManager);
+                if (listManager.size() != 0) {
+                    //new com.mycompany.agent.gui.Users().setVisible(true);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Неверный логин или пароль", "Ошибка", ERROR_MESSAGE);
+            }
+            auth.setCurrentUserId(id);
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -167,6 +254,7 @@ public class authorization extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(authorization.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

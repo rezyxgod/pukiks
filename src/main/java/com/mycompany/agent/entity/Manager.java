@@ -5,9 +5,11 @@
 package com.mycompany.agent.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +18,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -41,6 +48,19 @@ public class Manager implements Serializable {
     public Manager() {
     }
 
+    public List<Manager> getUserManager(int iDuser,
+            EntityManager em) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Manager> cq = cb.createQuery(Manager.class);
+        Root<Manager> root = cq.from(Manager.class);
+        Join<Manager, Users> user = root.join(Manager_.managerUser);
+        user.on(cb.equal(user.get(Users_.idusers), iDuser));
+        cq.select(root).where(cb.equal(user.get(Users_.idusers), iDuser));
+        TypedQuery query = em.createQuery(cq);
+        List<Manager> userDirector = query.getResultList();
+        return userDirector;
+    }
+    
     public Manager(Integer idManager) {
         this.idManager = idManager;
     }
