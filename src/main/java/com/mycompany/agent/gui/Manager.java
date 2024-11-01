@@ -4,6 +4,24 @@
  */
 package com.mycompany.agent.gui;
 
+import com.mycompany.agent.entity.Admin;
+import com.mycompany.agent.entity.Agent;
+import com.mycompany.agent.entity.Hotel;
+import com.mycompany.agent.entity.Packages;
+import com.mycompany.agent.entity.Users;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.List;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author 207371
@@ -15,7 +33,133 @@ public class Manager extends javax.swing.JFrame {
      */
     public Manager() {
         initComponents();
+        allHotel();
+        allPackages();
+        allPackagesWishes();
     }
+    
+    public void allHotel() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_agent_jar_1.0-SNAPSHOTPU");
+        EntityManager em = emf.createEntityManager();
+        Main m = new Main();
+        m.Session();
+        Vector<String> tableHeaders = new Vector<>();
+        tableHeaders.add("Номер отеля");
+        tableHeaders.add("Имя");
+        tableHeaders.add("Телефон");
+        tableHeaders.add("Кол-во номеров");
+        tableHeaders.add("Рейтинг");
+        tableHeaders.add("Адрес");
+        tableHeaders.add("Кол-во звёзд");
+
+        DateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd");
+        Vector tableData = new Vector();
+        for (com.mycompany.agent.entity.Hotel us : new com.mycompany.agent.entity.Hotel().getHotelList(m.em)) {
+            Vector<Object> oneRow = new Vector<Object>();
+            oneRow.add(us.getIdHotel());
+            oneRow.add(us.getName());
+            oneRow.add(us.getPhone());
+            oneRow.add(us.getKolvoNomerov());
+            oneRow.add(us.getRating());
+            oneRow.add(us.getAddress());
+            oneRow.add(us.getKolvoStar());
+            
+            tableData.add(oneRow);
+        }
+        Vector<Object> oneRow = new Vector<Object>();
+        oneRow.add("");
+        oneRow.add("");
+        tableData.add(oneRow);
+        jTable1.setModel(new DefaultTableModel(tableData, tableHeaders));
+
+    }
+    
+    public void allPackages() {
+        
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_agent_jar_1.0-SNAPSHOTPU");
+        EntityManager em = emf.createEntityManager();
+        Main m = new Main();
+        m.Session();
+        Vector<String> tableHeaders = new Vector<>();
+        tableHeaders.add("Номер путёвки");
+        tableHeaders.add("Место назначения");
+        tableHeaders.add("Дата начала");
+        tableHeaders.add("Дата окончания");
+        tableHeaders.add("Цена");
+        tableHeaders.add("Тип");
+
+        DateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd");
+        Vector tableData = new Vector();
+        for (com.mycompany.agent.entity.Packages us : new com.mycompany.agent.entity.Packages().getPackagesList(m.em)) {
+            Vector<Object> oneRow = new Vector<Object>();
+            oneRow.add(us.getPackageId());
+            oneRow.add(us.getDestination());
+            oneRow.add(format.format(us.getStartDate()));
+            oneRow.add(format.format(us.getEndDate()));
+            oneRow.add(us.getPrice());
+            oneRow.add(us.getType());
+            
+            tableData.add(oneRow);
+        }
+        Vector<Object> oneRow = new Vector<Object>();
+        oneRow.add("");
+        oneRow.add("");
+        tableData.add(oneRow);
+        jTable2.setModel(new DefaultTableModel(tableData, tableHeaders));
+
+    }
+    
+    
+    public void allPackagesWishes() {
+        
+      
+        Main m = new Main();
+        m.Session();
+        Vector<String> tableHeaders = new Vector<>();
+        tableHeaders.add("Номер путёвки");
+        tableHeaders.add("Описание желания");
+        tableHeaders.add("Номер пользователя");
+        tableHeaders.add("Номер проданной путёвки");
+
+        DateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd");
+        Vector tableData = new Vector();
+        for (com.mycompany.agent.entity.PackageWishes us : new com.mycompany.agent.entity.PackageWishes().getPackageWishesList(m.em)) {
+            Vector<Object> oneRow = new Vector<Object>();
+            oneRow.add(us.getWishId());
+            oneRow.add(us.getWishDescription()); 
+          
+            String idCategoryText = String.valueOf(us.getUserId());
+                Pattern p = Pattern.compile("(\\d+)");
+                Matcher m1 = p.matcher(idCategoryText);
+                int idCategory = 0;
+                while (m1.find()) {
+                    System.out.println(m1.group(1));
+                    idCategory = Integer.parseInt(m1.group(1));
+                }
+                oneRow.add(idCategory);
+                
+                String idCategoryText2 = String.valueOf(us.getPackagesaleId());
+               
+                m1 = p.matcher(idCategoryText2);
+                int idCategory2 = 0;
+                while (m1.find()) {
+                    System.out.println(m1.group(1));
+                    idCategory2 = Integer.parseInt(m1.group(1));
+                }
+                oneRow.add(idCategory2);
+                
+                
+            tableData.add(oneRow);
+        }
+        Vector<Object> oneRow = new Vector<Object>();
+        oneRow.add("");
+        oneRow.add("");
+        tableData.add(oneRow);
+        jTable4.setModel(new DefaultTableModel(tableData, tableHeaders));
+
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,7 +182,6 @@ public class Manager extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
@@ -46,6 +189,7 @@ public class Manager extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jTextField2 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
@@ -56,13 +200,11 @@ public class Manager extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         jTextField7 = new javax.swing.JTextField();
         jTextField8 = new javax.swing.JTextField();
         jTextField9 = new javax.swing.JTextField();
         jTextField10 = new javax.swing.JTextField();
         jTextField11 = new javax.swing.JTextField();
-        jTextField12 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
@@ -75,7 +217,6 @@ public class Manager extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
-        jButton8 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,11 +233,12 @@ public class Manager extends javax.swing.JFrame {
                 "Номер", "Имя", "Телефон", "Кол-во номеров", "Рейтинг", "Адрес", "Кол-во звёзд"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setHeaderValue("Номер");
-            jTable1.getColumnModel().getColumn(2).setHeaderValue("Начальная дата");
-        }
 
         jLabel1.setText("Имя");
 
@@ -111,10 +253,25 @@ public class Manager extends javax.swing.JFrame {
         jLabel6.setText("Кол-во звёзд");
 
         jButton1.setText("Добавить");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Удалить");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Изменить");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -136,11 +293,11 @@ public class Manager extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(17, 17, 17))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -149,7 +306,7 @@ public class Manager extends javax.swing.JFrame {
                         .addComponent(jButton2)
                         .addGap(12, 12, 12)
                         .addComponent(jButton3)
-                        .addContainerGap(13, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,6 +375,11 @@ public class Manager extends javax.swing.JFrame {
                 "Номер", "Место назначения", "Начальная дата", "Конечная дата", "Цена", "Тип", "Статус"
             }
         ));
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
         if (jTable2.getColumnModel().getColumnCount() > 0) {
             jTable2.getColumnModel().getColumn(0).setHeaderValue("Номер");
@@ -234,13 +396,26 @@ public class Manager extends javax.swing.JFrame {
 
         jLabel11.setText("Тип");
 
-        jLabel12.setText("Статус");
-
         jButton4.setText("Добавить");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Удалить");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("Изменить");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -257,16 +432,14 @@ public class Manager extends javax.swing.JFrame {
                             .addComponent(jLabel8)
                             .addComponent(jLabel9)
                             .addComponent(jLabel10)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel12))
+                            .addComponent(jLabel11))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(17, 17, 17))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -275,7 +448,7 @@ public class Manager extends javax.swing.JFrame {
                         .addComponent(jButton5)
                         .addGap(12, 12, 12)
                         .addComponent(jButton6)
-                        .addContainerGap(13, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,10 +477,6 @@ public class Manager extends javax.swing.JFrame {
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
@@ -366,7 +535,7 @@ public class Manager extends javax.swing.JFrame {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(131, 131, 131)
                 .addComponent(jButton7)
-                .addContainerGap(124, Short.MAX_VALUE))
+                .addContainerGap(117, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -408,8 +577,6 @@ public class Manager extends javax.swing.JFrame {
         ));
         jScrollPane4.setViewportView(jTable4);
 
-        jButton8.setText("Провести");
-
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -417,9 +584,7 @@ public class Manager extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
-                .addComponent(jButton8)
-                .addGap(94, 94, 94))
+                .addContainerGap(278, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -427,10 +592,6 @@ public class Manager extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton8)
-                .addGap(35, 35, 35))
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -450,7 +611,10 @@ public class Manager extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 859, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -459,6 +623,123 @@ public class Manager extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+      jTextField1.setText(String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 1)));
+        jTextField2.setText(String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 2)));
+        jTextField3.setText(String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 3)));
+        jTextField4.setText(String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 4)));
+        jTextField5.setText(String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 5)));
+        jTextField6.setText(String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 6)));
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       Main m = new Main();
+        m.Session();
+        Hotel hotel = new Hotel();
+        hotel.setIdHotel(Integer.parseInt(String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 0))));
+        hotel.deleteHotel(hotel, m.em);
+        allHotel();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+
+            Main m = new Main();
+            m.Session();
+            Hotel hotel = new Hotel();
+            hotel.setName(jTextField1.getText());
+            hotel.setPhone(jTextField2.getText());
+            hotel.setKolvoNomerov(Integer.parseInt(jTextField3.getText()));
+            hotel.setRating(Integer.parseInt(jTextField4.getText()));
+            hotel.setAddress((jTextField5.getText()));
+            hotel.setKolvoStar(Integer.parseInt(jTextField6.getText()));
+            hotel.addHotel(hotel, m.em);
+            
+       
+        allHotel();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+          Main m = new Main();
+            m.Session();
+            Hotel hotel = new Hotel();
+            hotel.setIdHotel(Integer.parseInt(String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 0))));
+            hotel.setName(jTextField1.getText());
+            hotel.setPhone(jTextField2.getText());
+            hotel.setKolvoNomerov(Integer.parseInt(jTextField3.getText()));
+            hotel.setRating(Integer.parseInt(jTextField4.getText()));
+            hotel.setAddress(jTextField5.getText());
+            hotel.setKolvoStar(Integer.parseInt(jTextField6.getText()));
+            hotel.upDateHotel(hotel, m.em);
+       
+        allHotel();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        jTextField7.setText(String.valueOf(jTable2.getValueAt(jTable2.getSelectedRow(), 1)));
+        jTextField8.setText(String.valueOf(jTable2.getValueAt(jTable2.getSelectedRow(), 2)));
+        jTextField9.setText(String.valueOf(jTable2.getValueAt(jTable2.getSelectedRow(), 3)));
+        jTextField10.setText(String.valueOf(jTable2.getValueAt(jTable2.getSelectedRow(), 4)));
+        jTextField11.setText(String.valueOf(jTable2.getValueAt(jTable2.getSelectedRow(), 5)));
+    }//GEN-LAST:event_jTable2MouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+      try {
+
+            Main m = new Main();
+            m.Session();
+            Packages packages = new Packages();
+            packages.setDestination(jTextField7.getText());
+            DateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date date1;
+            java.util.Date date2;
+            date1 = (java.util.Date) formatter.parse(jTextField8.getText());
+            date2 = (java.util.Date) formatter.parse(jTextField9.getText());
+            packages.setStartDate(date1);
+            packages.setEndDate(date2);
+            packages.setPrice(jTextField10.getText());
+            packages.setType((jTextField11.getText()));
+            packages.addPackages(packages, m.em);
+                
+        } catch (ParseException ex) {
+            Logger.getLogger(Packages.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        allPackages();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+         Main m = new Main();
+        m.Session();
+        Packages packages = new Packages();
+        packages.setPackageId(Integer.parseInt(String.valueOf(jTable2.getValueAt(jTable2.getSelectedRow(), 0))));
+        packages.deletePackages(packages, m.em);
+        allPackages();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        try {
+            Main m = new Main();
+            m.Session();
+            Packages packages = new Packages();
+            packages.setPackageId(Integer.parseInt(String.valueOf(jTable2.getValueAt(jTable2.getSelectedRow(), 0))));
+            packages.setDestination(jTextField7.getText());
+            DateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date date1;
+            java.util.Date date2;
+            date1 = (java.util.Date) formatter.parse(jTextField8.getText());
+            date2 = (java.util.Date) formatter.parse(jTextField9.getText());
+            packages.setStartDate(date1);
+            packages.setEndDate(date2);
+            packages.setPrice(jTextField10.getText());
+            packages.setType(jTextField11.getText());
+            packages.upDatePackages(packages, m.em);
+            
+        } catch (ParseException ex) {
+            Logger.getLogger(Users.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        allPackages();
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -503,11 +784,9 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -537,7 +816,6 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
