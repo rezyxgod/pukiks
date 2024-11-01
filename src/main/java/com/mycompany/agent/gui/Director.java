@@ -4,6 +4,27 @@
  */
 package com.mycompany.agent.gui;
 
+import com.mycompany.agent.entity.Ticket;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author 207371
@@ -13,8 +34,127 @@ public class Director extends javax.swing.JFrame {
     /**
      * Creates new form Director
      */
+    
     public Director() {
-        initComponents();
+    Main s = new Main();
+s.Session();
+initComponents();
+loadData();
+
+    }
+    public void loadDataForSelectedMonth(String month) {
+    // Создаем соединение с базой данных
+    String url = "jdbc:mysql://1208-1:3306/db04"; // Замените на ваше имя базы данных
+    String user = "login4"; // Замените на ваше имя пользователя
+    String password = "password4"; // Замените на ваш пароль
+
+    // Преобразуем название месяца в номер месяца
+    int monthNumber = getMonthNumber(month);
+
+    String query = "SELECT t.id_ticket, t.name_ticket, ts.sale_date " +
+                   "FROM ticket t " +
+                   "JOIN ticket_sales ts ON t.id_ticket = ts.id_ticket " +
+                   "WHERE MONTH(ts.sale_date) = ?";
+
+    try (Connection conn = DriverManager.getConnection(url, user, password);
+         PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+        pstmt.setInt(1, monthNumber);
+        ResultSet rs = pstmt.executeQuery();
+
+        // Создаем модель таблицы
+        DefaultTableModel model = new DefaultTableModel(new String[]{"Код билета", "Название билета", "Дата продажи"}, 0);
+
+        // Заполняем модель данными из ResultSet
+        while (rs.next()) {
+            int idTicket = rs.getInt("id_ticket");
+            String nameTicket = rs.getString("name_ticket");
+            Date saleDate = rs.getDate("sale_date");
+            model.addRow(new Object[]{idTicket, nameTicket, saleDate});
+        }
+
+        // Устанавливаем модель в JTable
+        jTable1.setModel(model);
+        jTable2.setModel(model);
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Ошибка при загрузке данных: " + e.getMessage());
+    }
+}
+   
+  
+private int getMonthNumber(String month) {
+    switch (month) {
+        case "Январь": return 1;
+        case "Февраль": return 2;
+        case "Март": return 3;
+        case "Апрель": return 4;
+        case "Май": return 5;
+        case "Июнь": return 6;
+        case "Июль": return 7;
+        case "Август": return 8;
+        case "Сентябрь": return 9;
+        case "Октябрь": return 10;
+        case "Ноябрь": return 11;
+        case "Декабрь": return 12;
+        default: return -1; // Неверный месяц
+    }
+}
+public void loadData() {
+    // Создаем соединение с базой данных
+    String url = "jdbc:mysql://1208-1:3306/db04"; // Замените на ваше имя базы данных
+    String user = "login4"; // Замените на ваше имя пользователя
+    String password = "password4"; // Замените на ваш пароль
+
+    String query = "SELECT t.id_ticket, t.name_ticket, ts.sale_date " +
+                   "FROM ticket t " +
+                   "JOIN ticket_sales ts ON t.id_ticket = ts.id_ticket";
+
+    try (Connection conn = DriverManager.getConnection(url, user, password);
+         Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery(query)) {
+
+        // Создаем модель таблицы
+        DefaultTableModel model = new DefaultTableModel(new String[]{"Код билета", "Название билета", "Дата продажи"}, 0);
+
+        // Заполняем модель данными из ResultSet
+        while (rs.next()) {
+            int idTicket = rs.getInt("id_ticket");
+            String nameTicket = rs.getString("name_ticket");
+            Date saleDate = rs.getDate("sale_date");
+            model.addRow(new Object[]{idTicket, nameTicket, saleDate});
+        }
+
+        // Устанавливаем модель в JTable
+        jTable1.setModel(model);
+          jTable2.setModel(model);
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Ошибка при загрузке данных: " + e.getMessage());
+    }
+}
+public void DatePeriodApp() {
+        // Инициализация компонентов (предполагается, что они уже созданы)
+         jFormattedTextField1 = new JFormattedTextField(new SimpleDateFormat("yyyy-MM-dd"));
+        jFormattedTextField2 = new JFormattedTextField(new SimpleDateFormat("yyyy-MM-dd"));
+        jButton2 = new JButton("Провести");
+        jTable2 = new JTable();
+
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        setLayout(new java.awt.FlowLayout());
+        add(jFormattedTextField1);
+        add(jFormattedTextField2);
+        add(jButton2);
+        add(new JScrollPane(jTable2));
+
+        pack();
     }
 
     /**
@@ -30,10 +170,10 @@ public class Director extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jComboBox2 = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -43,6 +183,7 @@ public class Director extends javax.swing.JFrame {
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jFormattedTextField2 = new javax.swing.JFormattedTextField();
         jLabel7 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
@@ -63,57 +204,62 @@ public class Director extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(204, 255, 204));
 
         jButton1.setText("Провести");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Выберите месяц");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Название билета", "Дата билета"
+                "Код билета", "Название билета", "Дата продажи билета"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Сентябрь", "Октябрь", "Ноябрь", "Декабрь", "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(27, 27, 27)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(101, 101, 101)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(111, 111, 111)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(102, 102, 102)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)))
                 .addContainerGap(201, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
                         .addComponent(jLabel1)
-                        .addGap(33, 33, 33)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(71, 71, 71)
-                        .addComponent(jButton1))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(36, Short.MAX_VALUE))
+                        .addGap(27, 27, 27)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(77, 77, 77)
+                        .addComponent(jButton1)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -137,26 +283,44 @@ public class Director extends javax.swing.JFrame {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Название билета", "Дата билета"
+                "Код билета", "Название билета", "Дата продажи билета"
             }
         ));
         jScrollPane2.setViewportView(jTable2);
 
         jButton2.setText("Провести");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Выберите временной период");
 
-        jFormattedTextField1.setText("jFormattedTextField1");
-
-        jFormattedTextField2.setText("jFormattedTextField2");
-
         jLabel7.setText("-");
+
+        jButton5.setText("Показать все данные");
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton5MouseClicked(evt);
+            }
+        });
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -167,22 +331,27 @@ public class Director extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(48, 48, 48))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addGap(64, 64, 64)
                                 .addComponent(jLabel2))
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGap(114, 114, 114)
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jButton2))))
+                                .addGap(192, 192, 192)
+                                .addComponent(jLabel7))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(154, 154, 154)
+                                .addComponent(jButton2)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
-                        .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton5)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,8 +365,10 @@ public class Director extends javax.swing.JFrame {
                             .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
-                        .addGap(117, 117, 117)
-                        .addComponent(jButton2))
+                        .addGap(26, 26, 26)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton5))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
@@ -342,15 +513,92 @@ public class Director extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+     // Получаем выбранный месяц из JComboBox
+    String selectedMonth = (String) jComboBox2.getSelectedItem();
+    
+    // Проверяем, что месяц выбран
+    if (selectedMonth != null) {
+        // Загружаем данные для выбранного месяца
+        loadDataForSelectedMonth(selectedMonth);
+    } else {
+        JOptionPane.showMessageDialog(this, "Пожалуйста, выберите месяц.");
+    }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+  try {
+            // Создаем объект SimpleDateFormat для парсинга дат
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            // Получаем даты из JFormattedTextField
+            Date startDate = dateFormat.parse(jFormattedTextField1.getText());
+            Date endDate = dateFormat.parse(jFormattedTextField2.getText());
+
+            // Получаем модель данных таблицы
+            DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+
+            // Создаем временный список для хранения строк, которые соответствуют указанному периоду
+            List<Object[]> filteredRows = new ArrayList<>();
+
+            // Проходим по всем строкам модели данных
+            for (int i = 0; i < model.getRowCount(); i++) {
+                java.sql.Date saleDate = (java.sql.Date) model.getValueAt(i, 2); // Предполагается, что дата продажи находится в третьей колонке
+                if (!saleDate.before(startDate) && !saleDate.after(endDate)) {
+                    filteredRows.add(new Object[]{
+                        model.getValueAt(i, 0), // Код билета
+                        model.getValueAt(i, 1), // Название билета
+                        model.getValueAt(i, 2)  // Дата продажи
+                    });
+                }
+            }
+
+            // Удаляем все строки из модели
+            model.setRowCount(0);
+
+            // Добавляем отфильтрованные строки обратно в модель
+            for (Object[] row : filteredRows) {
+                model.addRow(row);
+            }
+
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(null, "Ошибка формата даты", "Ошибка", JOptionPane.ERROR_MESSAGE);
+        }
+    
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
+    
+    }//GEN-LAST:event_jButton5MouseClicked
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        loadData();
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -392,7 +640,8 @@ public class Director extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JFormattedTextField jFormattedTextField2;
