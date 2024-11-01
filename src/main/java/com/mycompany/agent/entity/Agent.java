@@ -48,19 +48,6 @@ public class Agent implements Serializable {
     public Agent() {
     }
 
-    public List<Agent> getUserAgent(int iDuser,
-            EntityManager em) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Agent> cq = cb.createQuery(Agent.class);
-        Root<Agent> root = cq.from(Agent.class);
-        Join<Agent, Users> user = root.join(Agent_.agentUser);
-        user.on(cb.equal(user.get(Users_.idusers), iDuser));
-        cq.select(root).where(cb.equal(user.get(Users_.idusers), iDuser));
-        TypedQuery query = em.createQuery(cq);
-        List<Agent> userDirector = query.getResultList();
-        return userDirector;
-    }
-    
     public Agent(Integer idAgent) {
         this.idAgent = idAgent;
     }
@@ -105,5 +92,28 @@ public class Agent implements Serializable {
     public String toString() {
         return "com.mycompany.agent.entity.Agent[ idAgent=" + idAgent + " ]";
     }
-    
+    public List<Agent> getUserAgent(int iDuser,
+EntityManager em) {
+CriteriaBuilder cb = em.getCriteriaBuilder();
+CriteriaQuery<Agent> cq = cb.createQuery(Agent.class);
+Root<Agent> root = cq.from(Agent.class);
+Join<Agent, Users> user = root.join(Agent_.agentUser);
+user.on(cb.equal(user.get(Users_.idusers), iDuser));
+cq.select(root).where(cb.equal(user.get(Users_.idusers), iDuser));
+TypedQuery query = em.createQuery(cq);
+List<Agent> userDirector = query.getResultList();
+return userDirector;
+}
+    public void addAgent(Agent agent, EntityManager em) {
+        em.getTransaction().begin();
+        em.persist(agent);
+        em.getTransaction().commit();
+    }
+
+    public void deleteAgent(Agent Users, EntityManager em) {
+        em.getTransaction().begin();
+        Agent u = em.find(Agent.class, Users.getIdAgent());
+        em.remove(u);
+        em.getTransaction().commit();
+    }
 }

@@ -5,7 +5,6 @@
 package com.mycompany.agent.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -18,7 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,7 +27,7 @@ import javax.persistence.criteria.Root;
 
 /**
  *
- * @author 207363
+ * @author gleb9
  */
 @Entity
 @Table(name = "users")
@@ -49,9 +47,6 @@ import javax.persistence.criteria.Root;
     @NamedQuery(name = "Users.findByLogin", query = "SELECT u FROM Users u WHERE u.login = :login"),
     @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password")})
 public class Users implements Serializable {
-
-    @OneToMany(mappedBy = "clientUser")
-    private Collection<Client> clientCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -91,8 +86,49 @@ public class Users implements Serializable {
 
     public Users() {
     }
+    public List<Users> getUsersList(EntityManager em) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery cq = cb.createQuery(Users.class);
+        Root<Users> root = cq.from(Users.class);
+        cq.select(root);
+        TypedQuery query = em.createQuery(cq);
+        List<Users> userList = query.getResultList();
+        return userList;
+    }
 
-    public List<Users> getUserLoginPassword(String login, String password,
+    public void addUsers(Users users, EntityManager em) {
+        em.getTransaction().begin();
+        em.persist(users);
+        em.getTransaction().commit();
+
+    }
+
+    public void deleteUsers(Users users, EntityManager em) {
+        em.getTransaction().begin();
+        Users u = em.find(Users.class, users.getIdusers());
+        em.remove(u);
+        em.getTransaction().commit();
+    }
+    public void upDateUsers(Users employees, EntityManager em) {
+        em.getTransaction().begin();
+        Users emp = em.find(Users.class, employees.getIdusers());
+        emp.setImya(employees.getImya());
+        emp.setFamiliya(employees.getFamiliya());
+        emp.setOtchestvo(employees.getOtchestvo());
+        emp.setDataRoj(employees.getDataRoj());
+        emp.setDataTruda(employees.getDataTruda());
+        emp.setPassportSeries(employees.getPassportSeries());
+        emp.setPassportNumber(employees.getPassportNumber());
+        emp.setSnils(employees.getSnils());
+        emp.setPhotolink(employees.getPhotolink());
+        emp.setCode(employees.getCode());
+        emp.setPodtverzdenie(employees.getPodtverzdenie());
+        emp.setLogin(employees.getLogin());
+        emp.setPassword(employees.getPassword());
+        em.merge(emp);
+        em.getTransaction().commit();
+    }
+     public List<Users> getUserLoginPassword(String login, String password,
             EntityManager em) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Users> cq = cb.createQuery(Users.class);
@@ -103,7 +139,7 @@ public class Users implements Serializable {
         List<Users> userLoginPassword = query.getResultList();
         return userLoginPassword;
     }
-    
+
     public Users(Integer idusers) {
         this.idusers = idusers;
     }
@@ -243,14 +279,6 @@ public class Users implements Serializable {
     @Override
     public String toString() {
         return "com.mycompany.agent.entity.Users[ idusers=" + idusers + " ]";
-    }
-
-    public Collection<Client> getClientCollection() {
-        return clientCollection;
-    }
-
-    public void setClientCollection(Collection<Client> clientCollection) {
-        this.clientCollection = clientCollection;
     }
     
 }

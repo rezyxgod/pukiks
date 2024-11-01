@@ -26,7 +26,7 @@ import javax.persistence.criteria.Root;
 
 /**
  *
- * @author 207363
+ * @author gleb9
  */
 @Entity
 @Table(name = "client")
@@ -47,19 +47,33 @@ public class Client implements Serializable {
 
     public Client() {
     }
-
-    public List<Client> getUserClient(int iDuser,
-            EntityManager em) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Client> cq = cb.createQuery(Client.class);
-        Root<Client> root = cq.from(Client.class);
-        Join<Client, Users> user = root.join(Client_.clientUser);
-        user.on(cb.equal(user.get(Users_.idusers), iDuser));
-        cq.select(root).where(cb.equal(user.get(Users_.idusers), iDuser));
-        TypedQuery query = em.createQuery(cq);
-        List<Client> userDirector = query.getResultList();
-        return userDirector;
+    
+     public List<Client> getUserClient(int iDuser,
+EntityManager em) {
+CriteriaBuilder cb = em.getCriteriaBuilder();
+CriteriaQuery<Client> cq = cb.createQuery(Client.class);
+Root<Client> root = cq.from(Client.class);
+Join<Client, Users> user = root.join(Client_.clientUser);
+user.on(cb.equal(user.get(Users_.idusers), iDuser));
+cq.select(root).where(cb.equal(user.get(Users_.idusers), iDuser));
+TypedQuery query = em.createQuery(cq);
+List<Client> userDirector = query.getResultList();
+return userDirector;
+}
+    public void addClient(Client client, EntityManager em) {
+        em.getTransaction().begin();
+        em.persist(client);
+        em.getTransaction().commit();
     }
+
+    public void deleteClient(Client Users, EntityManager em) {
+        em.getTransaction().begin();
+        Client u = em.find(Client.class, Users.getIdClient());
+        em.remove(u);
+        em.getTransaction().commit();
+    }
+    
+    
 
     public Client(Integer idClient) {
         this.idClient = idClient;
@@ -105,5 +119,5 @@ public class Client implements Serializable {
     public String toString() {
         return "com.mycompany.agent.entity.Client[ idClient=" + idClient + " ]";
     }
-
+    
 }

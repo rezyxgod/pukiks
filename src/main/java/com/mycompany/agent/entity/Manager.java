@@ -48,19 +48,6 @@ public class Manager implements Serializable {
     public Manager() {
     }
 
-    public List<Manager> getUserManager(int iDuser,
-            EntityManager em) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Manager> cq = cb.createQuery(Manager.class);
-        Root<Manager> root = cq.from(Manager.class);
-        Join<Manager, Users> user = root.join(Manager_.managerUser);
-        user.on(cb.equal(user.get(Users_.idusers), iDuser));
-        cq.select(root).where(cb.equal(user.get(Users_.idusers), iDuser));
-        TypedQuery query = em.createQuery(cq);
-        List<Manager> userDirector = query.getResultList();
-        return userDirector;
-    }
-    
     public Manager(Integer idManager) {
         this.idManager = idManager;
     }
@@ -105,5 +92,28 @@ public class Manager implements Serializable {
     public String toString() {
         return "com.mycompany.agent.entity.Manager[ idManager=" + idManager + " ]";
     }
-    
+    public List<Manager> getUserManager(int iDuser,
+EntityManager em) {
+CriteriaBuilder cb = em.getCriteriaBuilder();
+CriteriaQuery<Manager> cq = cb.createQuery(Manager.class);
+Root<Manager> root = cq.from(Manager.class);
+Join<Manager, Users> user = root.join(Manager_.managerUser);
+user.on(cb.equal(user.get(Users_.idusers), iDuser));
+cq.select(root).where(cb.equal(user.get(Users_.idusers), iDuser));
+TypedQuery query = em.createQuery(cq);
+List<Manager> userDirector = query.getResultList();
+return userDirector;
+}
+     public void addManager(Manager manager, EntityManager em) {
+        em.getTransaction().begin();
+        em.persist(manager);
+        em.getTransaction().commit();
+    }
+
+    public void deleteManager(Manager Users, EntityManager em) {
+        em.getTransaction().begin();
+        Manager u = em.find(Manager.class, Users.getIdManager());
+        em.remove(u);
+        em.getTransaction().commit();
+    }
 }
