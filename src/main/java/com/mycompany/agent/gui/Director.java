@@ -4,12 +4,16 @@
  */
 package com.mycompany.agent.gui;
 
-import com.mycompany.agent.entity.Ticket;
+import java.awt.image.BufferedImage;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.DefaultCategoryDataset;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,12 +22,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.plot.PlotOrientation;
 
 /**
  *
@@ -34,110 +41,156 @@ public class Director extends javax.swing.JFrame {
     /**
      * Creates new form Director
      */
-    
     public Director() {
-    Main s = new Main();
-s.Session();
-initComponents();
-loadData();
+        Main s = new Main();
+        s.Session();
+        initComponents();
+        loadDataAndCreateChart();
+        loadData();
 
     }
+
     public void loadDataForSelectedMonth(String month) {
-    // Создаем соединение с базой данных
-    String url = "jdbc:mysql://1208-1:3306/db04"; // Замените на ваше имя базы данных
-    String user = "login4"; // Замените на ваше имя пользователя
-    String password = "password4"; // Замените на ваш пароль
+        String url = "jdbc:mysql://localhost:3306/db04";
+        String user = "root";
+        String password = "1234";
 
-    // Преобразуем название месяца в номер месяца
-    int monthNumber = getMonthNumber(month);
+        int monthNumber = getMonthNumber(month);
 
-    String query = "SELECT t.id_ticket, t.name_ticket, ts.sale_date " +
-                   "FROM ticket t " +
-                   "JOIN ticket_sales ts ON t.id_ticket = ts.id_ticket " +
-                   "WHERE MONTH(ts.sale_date) = ?";
+        String query = "SELECT ts.sale_date, COUNT(*) AS ticket_count "
+                + "FROM ticket_sales ts "
+                + "WHERE MONTH(ts.sale_date) = ? "
+                + "GROUP BY ts.sale_date";
 
-    try (Connection conn = DriverManager.getConnection(url, user, password);
-         PreparedStatement pstmt = conn.prepareStatement(query)) {
+        try (Connection conn = DriverManager.getConnection(url, user, password); PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-        pstmt.setInt(1, monthNumber);
-        ResultSet rs = pstmt.executeQuery();
+            pstmt.setInt(1, monthNumber);
+            ResultSet rs = pstmt.executeQuery();
 
-        // Создаем модель таблицы
-        DefaultTableModel model = new DefaultTableModel(new String[]{"Код билета", "Название билета", "Дата продажи"}, 0);
+            // Подготавливаем данные для диаграммы
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+            while (rs.next()) {
+                Date saleDate = rs.getDate("sale_date");
+                int ticketCount = rs.getInt("ticket_count");
+                dataset.addValue(ticketCount, "Продажи билетов", saleDate.toString());
+            }
 
-        // Заполняем модель данными из ResultSet
-        while (rs.next()) {
-            int idTicket = rs.getInt("id_ticket");
-            String nameTicket = rs.getString("name_ticket");
-            Date saleDate = rs.getDate("sale_date");
-            model.addRow(new Object[]{idTicket, nameTicket, saleDate});
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Ошибка при загрузке данных: " + e.getMessage());
         }
-
-        // Устанавливаем модель в JTable
-        jTable1.setModel(model);
-        jTable2.setModel(model);
-
-    } catch (SQLException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Ошибка при загрузке данных: " + e.getMessage());
     }
-}
-   
-  
-private int getMonthNumber(String month) {
-    switch (month) {
-        case "Январь": return 1;
-        case "Февраль": return 2;
-        case "Март": return 3;
-        case "Апрель": return 4;
-        case "Май": return 5;
-        case "Июнь": return 6;
-        case "Июль": return 7;
-        case "Август": return 8;
-        case "Сентябрь": return 9;
-        case "Октябрь": return 10;
-        case "Ноябрь": return 11;
-        case "Декабрь": return 12;
-        default: return -1; // Неверный месяц
-    }
-}
-public void loadData() {
-    // Создаем соединение с базой данных
-    String url = "jdbc:mysql://1208-1:3306/db04"; // Замените на ваше имя базы данных
-    String user = "login4"; // Замените на ваше имя пользователя
-    String password = "password4"; // Замените на ваш пароль
 
-    String query = "SELECT t.id_ticket, t.name_ticket, ts.sale_date " +
-                   "FROM ticket t " +
-                   "JOIN ticket_sales ts ON t.id_ticket = ts.id_ticket";
-
-    try (Connection conn = DriverManager.getConnection(url, user, password);
-         Statement stmt = conn.createStatement();
-         ResultSet rs = stmt.executeQuery(query)) {
-
-        // Создаем модель таблицы
-        DefaultTableModel model = new DefaultTableModel(new String[]{"Код билета", "Название билета", "Дата продажи"}, 0);
-
-        // Заполняем модель данными из ResultSet
-        while (rs.next()) {
-            int idTicket = rs.getInt("id_ticket");
-            String nameTicket = rs.getString("name_ticket");
-            Date saleDate = rs.getDate("sale_date");
-            model.addRow(new Object[]{idTicket, nameTicket, saleDate});
+    private int getMonthNumber(String month) {
+        switch (month) {
+            case "Январь":
+                return 1;
+            case "Февраль":
+                return 2;
+            case "Март":
+                return 3;
+            case "Апрель":
+                return 4;
+            case "Май":
+                return 5;
+            case "Июнь":
+                return 6;
+            case "Июль":
+                return 7;
+            case "Август":
+                return 8;
+            case "Сентябрь":
+                return 9;
+            case "Октябрь":
+                return 10;
+            case "Ноябрь":
+                return 11;
+            case "Декабрь":
+                return 12;
+            default:
+                return -1; // Неверный месяц
         }
-
-        // Устанавливаем модель в JTable
-        jTable1.setModel(model);
-          jTable2.setModel(model);
-
-    } catch (SQLException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Ошибка при загрузке данных: " + e.getMessage());
     }
-}
-public void DatePeriodApp() {
+
+    public void loadDataAndCreateChart() {
+        // Настройки подключения к базе данных
+        String url = "jdbc:mysql://localhost:3306/db04";
+        String user = "root";
+        String password = "1234";
+
+        String query = "SELECT ts.sale_date, COUNT(*) AS ticket_count "
+                + "FROM ticket_sales ts "
+                + "GROUP BY ts.sale_date";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+            // Подготовка данных для диаграммы
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+            while (rs.next()) {
+                Date saleDate = rs.getDate("sale_date");
+                int ticketCount = rs.getInt("ticket_count");
+                dataset.addValue(ticketCount, "Продажи билетов", saleDate.toString());
+            }
+
+            // Создание диаграммы
+            JFreeChart barChart = ChartFactory.createBarChart(
+                    "Продажи билетов", // Заголовок диаграммы
+                    "Дата продажи", // Метка оси X
+                    "Количество билетов", // Метка оси Y
+                    dataset,
+                    PlotOrientation.VERTICAL,
+                    false, // Легенда
+                    true, // Подсказки
+                    false);                  // URL
+
+            // Преобразование диаграммы в изображение
+            BufferedImage chartImage = barChart.createBufferedImage(540, 308);
+
+            // Установка изображения в JLabel
+            ImageIcon chartIcon = new ImageIcon(chartImage);
+            jLabel9.setIcon(chartIcon);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Ошибка при загрузке данных: " + e.getMessage());
+        }
+    }
+
+    public void loadData() {
+        // Создаем соединение с базой данных
+        String url = "jdbc:mysql://localhost:3306/db04";
+        String user = "root";
+        String password = "1234";
+
+        String query = "SELECT t.id_ticket, t.name_ticket, ts.sale_date "
+                + "FROM ticket t "
+                + "JOIN ticket_sales ts ON t.id_ticket = ts.id_ticket";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+
+            // Создаем модель таблицы
+            DefaultTableModel model = new DefaultTableModel(new String[]{"Код билета", "Название билета", "Дата продажи"}, 0);
+
+            // Заполняем модель данными из ResultSet
+            while (rs.next()) {
+                int idTicket = rs.getInt("id_ticket");
+                String nameTicket = rs.getString("name_ticket");
+                Date saleDate = rs.getDate("sale_date");
+                model.addRow(new Object[]{idTicket, nameTicket, saleDate});
+            }
+
+            // Устанавливаем модель в JTable
+            jTable1.setModel(model);
+            jTable2.setModel(model);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Ошибка при загрузке данных: " + e.getMessage());
+        }
+    }
+
+    public void DatePeriodApp() {
         // Инициализация компонентов (предполагается, что они уже созданы)
-         jFormattedTextField1 = new JFormattedTextField(new SimpleDateFormat("yyyy-MM-dd"));
+        jFormattedTextField1 = new JFormattedTextField(new SimpleDateFormat("yyyy-MM-dd"));
         jFormattedTextField2 = new JFormattedTextField(new SimpleDateFormat("yyyy-MM-dd"));
         jButton2 = new JButton("Провести");
         jTable2 = new JTable();
@@ -174,6 +227,7 @@ public void DatePeriodApp() {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jComboBox2 = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -239,13 +293,18 @@ public void DatePeriodApp() {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(101, 101, 101)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1)))
-                .addContainerGap(201, Short.MAX_VALUE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(101, 101, 101)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel1))))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,23 +317,23 @@ public void DatePeriodApp() {
                         .addGap(27, 27, 27)
                         .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(77, 77, 77)
-                        .addComponent(jButton1)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 6, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jTabbedPane1.addTab("1) Просмотр количества проданных билетов за месяц", jPanel1);
@@ -333,7 +392,7 @@ public void DatePeriodApp() {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 223, Short.MAX_VALUE)
                         .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(48, 48, 48))
                     .addGroup(jPanel6Layout.createSequentialGroup()
@@ -370,7 +429,7 @@ public void DatePeriodApp() {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton5))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -403,7 +462,7 @@ public void DatePeriodApp() {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(291, 291, 291)
                 .addComponent(jLabel3)
-                .addContainerGap(545, Short.MAX_VALUE))
+                .addContainerGap(738, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -420,7 +479,7 @@ public void DatePeriodApp() {
                 .addComponent(jLabel4)
                 .addGap(33, 33, 33)
                 .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(jButton3)
@@ -461,7 +520,7 @@ public void DatePeriodApp() {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(323, 323, 323)
                 .addComponent(jLabel5)
-                .addContainerGap(513, Short.MAX_VALUE))
+                .addContainerGap(706, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -493,7 +552,7 @@ public void DatePeriodApp() {
                 .addComponent(jLabel5)
                 .addGap(97, 97, 97)
                 .addComponent(jButton4)
-                .addContainerGap(167, Short.MAX_VALUE))
+                .addContainerGap(225, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -530,16 +589,16 @@ public void DatePeriodApp() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     // Получаем выбранный месяц из JComboBox
-    String selectedMonth = (String) jComboBox2.getSelectedItem();
-    
-    // Проверяем, что месяц выбран
-    if (selectedMonth != null) {
-        // Загружаем данные для выбранного месяца
-        loadDataForSelectedMonth(selectedMonth);
-    } else {
-        JOptionPane.showMessageDialog(this, "Пожалуйста, выберите месяц.");
-    }
+        // Получаем выбранный месяц из JComboBox
+        String selectedMonth = (String) jComboBox2.getSelectedItem();
+
+        // Проверяем, что месяц выбран
+        if (selectedMonth != null) {
+            // Загружаем данные для выбранного месяца
+            loadDataForSelectedMonth(selectedMonth);
+        } else {
+            JOptionPane.showMessageDialog(this, "Пожалуйста, выберите месяц.");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
@@ -551,7 +610,7 @@ public void DatePeriodApp() {
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-  try {
+        try {
             // Создаем объект SimpleDateFormat для парсинга дат
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -572,7 +631,7 @@ public void DatePeriodApp() {
                     filteredRows.add(new Object[]{
                         model.getValueAt(i, 0), // Код билета
                         model.getValueAt(i, 1), // Название билета
-                        model.getValueAt(i, 2)  // Дата продажи
+                        model.getValueAt(i, 2) // Дата продажи
                     });
                 }
             }
@@ -588,16 +647,16 @@ public void DatePeriodApp() {
         } catch (ParseException ex) {
             JOptionPane.showMessageDialog(null, "Ошибка формата даты", "Ошибка", JOptionPane.ERROR_MESSAGE);
         }
-    
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
-    
+
     }//GEN-LAST:event_jButton5MouseClicked
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         loadData();
-        
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
@@ -655,6 +714,7 @@ public void DatePeriodApp() {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
