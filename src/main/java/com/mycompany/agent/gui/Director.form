@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jTabbedPane1" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jTabbedPane1" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
+      <SubComponents>
+        <Container class="javax.swing.JPanel" name="jPanel1">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="1) &#x41f;&#x440;&#x43e;&#x441;&#x43c;&#x43e;&#x442;&#x440; &#x43a;&#x43e;&#x43b;&#x438;&#x447;&#x435;&#x441;&#x442;&#x432;&#x430; &#x43f;&#x440;&#x43e;&#x434;&#x430;&#x43d;&#x43d;&#x44b;&#x445; &#x431;&#x438;&#x43b;&#x435;&#x442;&#x43e;&#x432; &#x437;&#x430; &#x43c;&#x435;&#x441;&#x44f;&#x446;">
+                <Property name="tabTitle" type="java.lang.String" value="1) &#x41f;&#x440;&#x43e;&#x441;&#x43c;&#x43e;&#x442;&#x440; &#x43a;&#x43e;&#x43b;&#x438;&#x447;&#x435;&#x441;&#x442;&#x432;&#x430; &#x43f;&#x440;&#x43e;&#x434;&#x430;&#x43d;&#x43d;&#x44b;&#x445; &#x431;&#x438;&#x43b;&#x435;&#x442;&#x43e;&#x432; &#x437;&#x430; &#x43c;&#x435;&#x441;&#x44f;&#x446;"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jPanel5" alignment="0" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
+                      <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JPanel" name="jPanel5">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="cc" green="ff" red="cc" type="rgb"/>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="101" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jButton1" min="-2" pref="96" max="-2" attributes="0"/>
+                                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                          <Component id="jComboBox2" alignment="1" min="-2" pref="82" max="-2" attributes="0"/>
+                                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                                  <Component id="jLabel9" min="-2" pref="540" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace pref="20" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                                  <Component id="jComboBox2" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
+                                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="jLabel9" min="-2" pref="308" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace pref="14" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JButton" name="jButton1">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="&#x41f;&#x440;&#x43e;&#x432;&#x435;&#x441;&#x442;&#x438;"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel1">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="&#x412;&#x44b;&#x431;&#x435;&#x440;&#x438;&#x442;&#x435; &#x43c;&#x435;&#x441;&#x44f;&#x446;"/>
+                  </Properties>
+                </Component>
+                <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+                  <AuxValues>
+                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                  </AuxValues>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                  <SubComponents>
+                    <Component class="javax.swing.JTable" name="jTable1">
+                      <Properties>
+                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                          <Table columnCount="3" rowCount="4">
+                            <Column editable="true" title="&#x41a;&#x43e;&#x434; &#x431;&#x438;&#x43b;&#x435;&#x442;&#x430;" type="java.lang.Object"/>
+                            <Column editable="true" title="&#x41d;&#x430;&#x437;&#x432;&#x430;&#x43d;&#x438;&#x435; &#x431;&#x438;&#x43b;&#x435;&#x442;&#x430;" type="java.lang.Object"/>
+                            <Column editable="true" title="&#x414;&#x430;&#x442;&#x430; &#x43f;&#x440;&#x43e;&#x434;&#x430;&#x436;&#x438; &#x431;&#x438;&#x43b;&#x435;&#x442;&#x430;" type="java.lang.Object"/>
+                          </Table>
+                        </Property>
+                        <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                          <TableColumnModel selectionModel="0">
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                          </TableColumnModel>
+                        </Property>
+                        <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                          <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Component class="javax.swing.JComboBox" name="jComboBox2">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="12">
+                        <StringItem index="0" value="&#x421;&#x435;&#x43d;&#x442;&#x44f;&#x431;&#x440;&#x44c;"/>
+                        <StringItem index="1" value="&#x41e;&#x43a;&#x442;&#x44f;&#x431;&#x440;&#x44c;"/>
+                        <StringItem index="2" value="&#x41d;&#x43e;&#x44f;&#x431;&#x440;&#x44c;"/>
+                        <StringItem index="3" value="&#x414;&#x435;&#x43a;&#x430;&#x431;&#x440;&#x44c;"/>
+                        <StringItem index="4" value="&#x42f;&#x43d;&#x432;&#x430;&#x440;&#x44c;"/>
+                        <StringItem index="5" value="&#x424;&#x435;&#x432;&#x440;&#x430;&#x43b;&#x44c;"/>
+                        <StringItem index="6" value="&#x41c;&#x430;&#x440;&#x442;"/>
+                        <StringItem index="7" value="&#x410;&#x43f;&#x440;&#x435;&#x43b;&#x44c;"/>
+                        <StringItem index="8" value="&#x41c;&#x430;&#x439;"/>
+                        <StringItem index="9" value="&#x418;&#x44e;&#x43d;&#x44c;"/>
+                        <StringItem index="10" value="&#x418;&#x44e;&#x43b;&#x44c;"/>
+                        <StringItem index="11" value="&#x410;&#x432;&#x433;&#x443;&#x441;&#x442;"/>
+                      </StringArray>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox2ActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel9">
+                </Component>
+              </SubComponents>
+            </Container>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel2">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="2) &#x41f;&#x440;&#x43e;&#x441;&#x43c;&#x43e;&#x442;&#x440; &#x43a;&#x43e;&#x43b;&#x438;&#x447;&#x435;&#x441;&#x442;&#x432;&#x430; &#x43f;&#x440;&#x43e;&#x434;&#x430;&#x43d;&#x43d;&#x44b;&#x445; &#x431;&#x438;&#x43b;&#x435;&#x442;&#x43e;&#x432; &#x437;&#x430; &#x443;&#x43a;&#x430;&#x437;&#x430;&#x43d;&#x43d;&#x44b;&#x439; &#x432;&#x440;&#x435;&#x43c;&#x435;&#x43d;&#x43d;&#x43e;&#x439;  &#x43f;&#x435;&#x440;&#x438;&#x43e;&#x434;. ">
+                <Property name="tabTitle" type="java.lang.String" value="2) &#x41f;&#x440;&#x43e;&#x441;&#x43c;&#x43e;&#x442;&#x440; &#x43a;&#x43e;&#x43b;&#x438;&#x447;&#x435;&#x441;&#x442;&#x432;&#x430; &#x43f;&#x440;&#x43e;&#x434;&#x430;&#x43d;&#x43d;&#x44b;&#x445; &#x431;&#x438;&#x43b;&#x435;&#x442;&#x43e;&#x432; &#x437;&#x430; &#x443;&#x43a;&#x430;&#x437;&#x430;&#x43d;&#x43d;&#x44b;&#x439; &#x432;&#x440;&#x435;&#x43c;&#x435;&#x43d;&#x43d;&#x43e;&#x439;  &#x43f;&#x435;&#x440;&#x438;&#x43e;&#x434;. "/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jPanel6" alignment="0" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jPanel6" alignment="0" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JPanel" name="jPanel6">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="cc" green="ff" red="cc" type="rgb"/>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                          <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                                  <Component id="jFormattedTextField1" min="-2" pref="140" max="-2" attributes="0"/>
+                                  <EmptySpace pref="223" max="32767" attributes="0"/>
+                                  <Component id="jFormattedTextField2" min="-2" pref="140" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="192" max="-2" attributes="0"/>
+                                          <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="154" max="-2" attributes="0"/>
+                                          <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="jButton5" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jFormattedTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jFormattedTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                                  <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="jButton5" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="88" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+                  <AuxValues>
+                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                  </AuxValues>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                  <SubComponents>
+                    <Component class="javax.swing.JTable" name="jTable2">
+                      <Properties>
+                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                          <Table columnCount="3" rowCount="4">
+                            <Column editable="true" title="&#x41a;&#x43e;&#x434; &#x431;&#x438;&#x43b;&#x435;&#x442;&#x430;" type="java.lang.Object"/>
+                            <Column editable="true" title="&#x41d;&#x430;&#x437;&#x432;&#x430;&#x43d;&#x438;&#x435; &#x431;&#x438;&#x43b;&#x435;&#x442;&#x430;" type="java.lang.Object"/>
+                            <Column editable="true" title="&#x414;&#x430;&#x442;&#x430; &#x43f;&#x440;&#x43e;&#x434;&#x430;&#x436;&#x438; &#x431;&#x438;&#x43b;&#x435;&#x442;&#x430;" type="java.lang.Object"/>
+                          </Table>
+                        </Property>
+                        <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                          <TableColumnModel selectionModel="0">
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                          </TableColumnModel>
+                        </Property>
+                        <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                          <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Component class="javax.swing.JButton" name="jButton2">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="&#x41f;&#x440;&#x43e;&#x432;&#x435;&#x441;&#x442;&#x438;"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton2MouseClicked"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel2">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="&#x412;&#x44b;&#x431;&#x435;&#x440;&#x438;&#x442;&#x435; &#x432;&#x440;&#x435;&#x43c;&#x435;&#x43d;&#x43d;&#x43e;&#x439; &#x43f;&#x435;&#x440;&#x438;&#x43e;&#x434;"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField1">
+                </Component>
+                <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField2">
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel7">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="-"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="jButton5">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="&#x41f;&#x43e;&#x43a;&#x430;&#x437;&#x430;&#x442;&#x44c; &#x432;&#x441;&#x435; &#x434;&#x430;&#x43d;&#x43d;&#x44b;&#x435;"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton5MouseClicked"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+                  </Events>
+                </Component>
+              </SubComponents>
+            </Container>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel3">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="3) &#x41f;&#x440;&#x43e;&#x441;&#x43c;&#x43e;&#x442;&#x440; &#x441;&#x43e;&#x43e;&#x442;&#x43d;&#x43e;&#x448;&#x435;&#x43d;&#x438;&#x44f; &#x43f;&#x440;&#x43e;&#x434;&#x430;&#x43d;&#x43d;&#x44b;&#x445; &#x43f;&#x443;&#x442;&#x451;&#x432;&#x43e;&#x43a; &#x43f;&#x43e; &#x432;&#x43d;&#x443;&#x442;&#x440;&#x435;&#x43d;&#x43d;&#x435;&#x43c;&#x443; &#x438;  &#x432;&#x43d;&#x435;&#x448;&#x43d;&#x435;&#x43c;&#x443; &#x442;&#x443;&#x440;&#x438;&#x437;&#x43c;&#x443; &#x437;&#x430; &#x43c;&#x435;&#x441;&#x44f;&#x446;.">
+                <Property name="tabTitle" type="java.lang.String" value="3) &#x41f;&#x440;&#x43e;&#x441;&#x43c;&#x43e;&#x442;&#x440; &#x441;&#x43e;&#x43e;&#x442;&#x43d;&#x43e;&#x448;&#x435;&#x43d;&#x438;&#x44f; &#x43f;&#x440;&#x43e;&#x434;&#x430;&#x43d;&#x43d;&#x44b;&#x445; &#x43f;&#x443;&#x442;&#x451;&#x432;&#x43e;&#x43a; &#x43f;&#x43e; &#x432;&#x43d;&#x443;&#x442;&#x440;&#x435;&#x43d;&#x43d;&#x435;&#x43c;&#x443; &#x438;  &#x432;&#x43d;&#x435;&#x448;&#x43d;&#x435;&#x43c;&#x443; &#x442;&#x443;&#x440;&#x438;&#x437;&#x43c;&#x443; &#x437;&#x430; &#x43c;&#x435;&#x441;&#x44f;&#x446;."/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jPanel7" alignment="0" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jPanel7" alignment="0" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JPanel" name="jPanel7">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="cc" green="ff" red="cc" type="rgb"/>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="291" max="-2" attributes="0"/>
+                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="784" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                  <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jComboBox4" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="-2" pref="123" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                          <Component id="jComboBox4" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="121" max="32767" attributes="0"/>
+                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="274" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JButton" name="jButton3">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="&#x41f;&#x440;&#x43e;&#x432;&#x435;&#x441;&#x442;&#x438;"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel3">
+                </Component>
+                <Component class="javax.swing.JComboBox" name="jComboBox4">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="12">
+                        <StringItem index="0" value="01 &#x42f;&#x43d;&#x432;&#x430;&#x440;&#x44c;"/>
+                        <StringItem index="1" value="02 &#x424;&#x435;&#x432;&#x440;&#x430;&#x43b;&#x44c;"/>
+                        <StringItem index="2" value="03 &#x41c;&#x430;&#x440;&#x442;"/>
+                        <StringItem index="3" value="04 &#x410;&#x43f;&#x440;&#x435;&#x43b;&#x44c;"/>
+                        <StringItem index="4" value="05 &#x41c;&#x430;&#x439;"/>
+                        <StringItem index="5" value="06 &#x418;&#x44e;&#x43d;&#x44c;"/>
+                        <StringItem index="6" value="07 &#x418;&#x44e;&#x43b;&#x44c;"/>
+                        <StringItem index="7" value="08 &#x410;&#x432;&#x433;&#x443;&#x441;&#x442;"/>
+                        <StringItem index="8" value="09 &#x421;&#x435;&#x43d;&#x442;&#x44f;&#x431;&#x440;&#x44c;"/>
+                        <StringItem index="9" value="10 &#x41e;&#x43a;&#x442;&#x44f;&#x431;&#x440;&#x44c;"/>
+                        <StringItem index="10" value="11 &#x41d;&#x43e;&#x44f;&#x431;&#x440;&#x44c;"/>
+                        <StringItem index="11" value="12 &#x414;&#x435;&#x43a;&#x430;&#x431;&#x440;&#x44c;"/>
+                      </StringArray>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel4">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="&#x412;&#x44b;&#x431;&#x435;&#x440;&#x438;&#x442;&#x435; &#x43c;&#x435;&#x441;&#x44f;&#x446;"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel4">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="4) &#x41f;&#x440;&#x43e;&#x441;&#x43c;&#x43e;&#x442;&#x440; &#x441;&#x43e;&#x43e;&#x442;&#x43d;&#x43e;&#x448;&#x435;&#x43d;&#x438;&#x44f; &#x43f;&#x440;&#x43e;&#x434;&#x430;&#x43d;&#x43d;&#x44b;&#x445; &#x43f;&#x443;&#x442;&#x451;&#x432;&#x43e;&#x43a; &#x43f;&#x43e; &#x432;&#x43d;&#x443;&#x442;&#x440;&#x435;&#x43d;&#x43d;&#x435;&#x43c;&#x443; &#x438;  &#x432;&#x43d;&#x435;&#x448;&#x43d;&#x435;&#x43c;&#x443; &#x442;&#x443;&#x440;&#x438;&#x437;&#x43c;&#x443; &#x437;&#x430; &#x443;&#x43a;&#x430;&#x437;&#x430;&#x43d;&#x43d;&#x44b;&#x439; &#x432;&#x440;&#x435;&#x43c;&#x435;&#x43d;&#x43d;&#x43e;&#x439; &#x43f;&#x435;&#x440;&#x438;&#x43e;&#x434;.">
+                <Property name="tabTitle" type="java.lang.String" value="4) &#x41f;&#x440;&#x43e;&#x441;&#x43c;&#x43e;&#x442;&#x440; &#x441;&#x43e;&#x43e;&#x442;&#x43d;&#x43e;&#x448;&#x435;&#x43d;&#x438;&#x44f; &#x43f;&#x440;&#x43e;&#x434;&#x430;&#x43d;&#x43d;&#x44b;&#x445; &#x43f;&#x443;&#x442;&#x451;&#x432;&#x43e;&#x43a; &#x43f;&#x43e; &#x432;&#x43d;&#x443;&#x442;&#x440;&#x435;&#x43d;&#x43d;&#x435;&#x43c;&#x443; &#x438;  &#x432;&#x43d;&#x435;&#x448;&#x43d;&#x435;&#x43c;&#x443; &#x442;&#x443;&#x440;&#x438;&#x437;&#x43c;&#x443; &#x437;&#x430; &#x443;&#x43a;&#x430;&#x437;&#x430;&#x43d;&#x43d;&#x44b;&#x439; &#x432;&#x440;&#x435;&#x43c;&#x435;&#x43d;&#x43d;&#x43e;&#x439; &#x43f;&#x435;&#x440;&#x438;&#x43e;&#x434;."/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jPanel8" alignment="0" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jPanel8" alignment="0" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JPanel" name="jPanel8">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="cc" green="ff" red="cc" type="rgb"/>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="323" max="-2" attributes="0"/>
+                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="706" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="134" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="jButton4" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="172" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="jFormattedTextField3" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                                  <Component id="jFormattedTextField4" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jFormattedTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jFormattedTextField4" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
+                          <Component id="jButton4" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="225" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="jLabel5">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="&#x413;&#x440;&#x430;&#x444;&#x438;&#x43a;"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="jButton4">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="&#x41f;&#x440;&#x43e;&#x432;&#x435;&#x441;&#x442;&#x438;"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel6">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="&#x412;&#x44b;&#x431;&#x435;&#x440;&#x438;&#x442;&#x435; &#x432;&#x440;&#x435;&#x43c;&#x435;&#x43d;&#x43d;&#x43e;&#x439; &#x43f;&#x435;&#x440;&#x438;&#x43e;&#x434;"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField3">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="jFormattedTextField3"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField4">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="jFormattedTextField4"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel8">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="-"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>
